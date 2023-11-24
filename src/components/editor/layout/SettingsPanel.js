@@ -31,8 +31,7 @@ export const SettingsPanel = () => {
         </div>
         {selected.isDeletable ? (
           <div
-            variant="contained"
-            color="default"
+          className="bg-red-500 py-"
             onClick={() => {
               actions.delete(selected.id);
             }}

@@ -49,7 +49,6 @@ export const Button = ({ size, variant, color, children, text }) => {
         onKeyDown={handleToggle}
         onClick={() => setActive(!active)}
       >
-        {children}
         {text}
       </button>
       <Modal isOpen={toggle} onClose={handleToggle}>

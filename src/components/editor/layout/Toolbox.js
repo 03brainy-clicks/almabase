@@ -6,7 +6,8 @@ import { Text } from "../elements/text/Text";
 import { Element, useEditor } from "@craftjs/core";
 import Dropdown from "../../../utils/Dropdown";
 import ElementCard from "../../cards/ElementCard";
-
+import { SettingsPanel } from "./SettingsPanel";
+import { Input } from "../elements/input/Input";
 // export const Toolbox = () => {
 //   const { connectors, query } = useEditor();
 //   return (
@@ -43,8 +44,6 @@ import ElementCard from "../../cards/ElementCard";
 //   );
 // };
 
-
-
 export const Toolbox = () => {
   const { connectors } = useEditor();
   return (
@@ -55,13 +54,14 @@ export const Toolbox = () => {
       <Dropdown title={"BLOCKS"}>
         <div className="px-5 flex flex-col gap-2 pb-5 ">
           <div
-            ref={(ref) =>
-              connectors.create(ref, <Button text="Click me" size="small" />)
-            }
+            ref={(ref) => connectors.create(ref, <Button text="Click me" />)}
           >
             <ElementCard title="Button" />
           </div>
-          <div ref={(ref) => connectors.create(ref, <Text text="Hi world" />)}>
+          <div ref={(ref) => connectors.create(ref, <Input text="Hi Input" />)}>
+            <ElementCard title="Input" />
+          </div>
+          <div ref={(ref) => connectors.create(ref, <Text text="Hi Text" />)}>
             <ElementCard title="Text" />
           </div>
           <div
@@ -76,8 +76,7 @@ export const Toolbox = () => {
           </div>
         </div>
       </Dropdown>
+      <SettingsPanel />
     </div>
   );
 };
-
-
