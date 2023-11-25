@@ -1,15 +1,10 @@
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
 import React, { useState } from "react";
 
-
-const Dropdown = ({
-  open = true,
-  title,
-  children,
-}) => {
+const Dropdown = ({ open = true, title, children }) => {
   const [isOpen, setIsOpen] = useState(open);
 
-  const handleToggle = (e)=> {
+  const handleToggle = (e) => {
     e.preventDefault();
     setIsOpen((prev) => !prev);
   };

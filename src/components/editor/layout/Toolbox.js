@@ -1,4 +1,3 @@
-// components/Toolbox.js
 import React from "react";
 import { Button } from "../elements/button/Button";
 import { Container } from "../elements/container/Container";
@@ -6,48 +5,13 @@ import { Text } from "../elements/text/Text";
 import { Element, useEditor } from "@craftjs/core";
 import Dropdown from "../../../utils/Dropdown";
 import ElementCard from "../../cards/ElementCard";
-import { SettingsPanel } from "./SettingsPanel";
 import { Input } from "../elements/input/Input";
-// export const Toolbox = () => {
-//   const { connectors, query } = useEditor();
-//   return (
-//     <div className="bg-gray-300 ">
-//       <div className="flex"> Elements</div>
-//       <div className="flex flex-col gap-5">
-//         <button
-//           ref={(ref) =>
-//             connectors.create(ref, <Button text="Click me" size="small" />)
-//           }
-//           className="py-1 px-5 text-center bg-blue-500 rounded"
-//         >
-//           Button
-//         </button>
-//         <button
-//           ref={(ref) => connectors.create(ref, <Text text="Hi world" />)}
-//           className="py-1 px-5 text-center bg-blue-500 rounded"
-//         >
-//           Text
-//         </button>
-//         <button
-//           ref={(ref) =>
-//             connectors.create(
-//               ref,
-//               <Element is={Container} padding={20} canvas />
-//             )
-//           }
-//           className="py-1 px-5 text-center bg-blue-500 rounded"
-//         >
-//           container
-//         </button>
-//       </div>
-//     </div>
-//   );
-// };
+import { Label } from "../elements/label/Label";
 
 export const Toolbox = () => {
   const { connectors } = useEditor();
   return (
-    <div className="sidebar h-full bg-white border-l  w-64 flex-col">
+    <div className="sidebar h-full bg-white border-l  w-80 flex-col">
       <div className="text-sm p-5 border-b">
         <h6 className="font-semibold ">ELEMENTS</h6>
       </div>
@@ -58,25 +22,46 @@ export const Toolbox = () => {
           >
             <ElementCard title="Button" />
           </div>
-          <div ref={(ref) => connectors.create(ref, <Input text="Hi Input" />)}>
+          <div
+            ref={(ref) =>
+              connectors.create(
+                ref,
+                <Input text="" placeholder="Enter Your Name" />
+              )
+            }
+          >
             <ElementCard title="Input" />
+          </div>
+          <div ref={(ref) => connectors.create(ref, <Label text="Name" />)}>
+            <ElementCard title="Label" />
           </div>
           <div ref={(ref) => connectors.create(ref, <Text text="Hi Text" />)}>
             <ElementCard title="Text" />
           </div>
           <div
             ref={(ref) =>
-              connectors.create(
-                ref,
-                <Element is={Container} padding={20} canvas />
-              )
+              connectors.create(ref, <Element is={Container} canvas />)
             }
           >
             <ElementCard title="Container" />
           </div>
         </div>
       </Dropdown>
-      <SettingsPanel />
+      <div className="p-5">
+        <div className="bg-gray-100 rounded-md p-2">
+          <h6 className="text-xs font-semibold">NOTE</h6>
+          <ul className="text-xs mt-2 flex gap-2 flex-col">
+            <li>
+              <span className=" font-medium">Select + Enter : </span> To open
+              and close component style settings
+            </li>{" "}
+            <li>
+              <span className=" font-medium">Select + Delete : </span> To delete
+              selected component
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   );
 };

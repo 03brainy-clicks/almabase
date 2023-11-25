@@ -1,14 +1,13 @@
-// components/user/Button.js
-import { useEditor, useNode } from "@craftjs/core";
+// components/user/Text.js
 import React, { useState } from "react";
+import { useEditor, useNode } from "@craftjs/core";
+import { NumberField, RichtextField } from "../../../form-elements";
 import Modal from "../../../../utils/Modal";
 import { SettingsPanel } from "../../layout/SettingsPanel";
-import { ColorField, NumberField, RichtextField } from "../../../form-elements";
 
-export const Button = ({
+export const Label = ({
   fontSize,
   fontWeight,
-  backgroundColor,
   color,
   text,
   padding,
@@ -30,54 +29,57 @@ export const Button = ({
 
   const handleToggle = (e) => {
     if (e.key === "Enter") {
+      // Toggle the modal on Enter key press
       setToggle((prev) => !prev);
     } else if (e.key === "Delete") {
+      // Delete the label on Delete key press
       actions.delete(id);
     }
   };
 
-  const handleToggleCLick = (e) => {
+  const handleToggleClick = () => {
     setToggle((prev) => !prev);
   };
 
   return (
     <>
-      <button
-        ref={(ref) => connect(drag(ref))}
-        className={`rounded-md outline-red-600 ${
+      <label
+        className={`block outline-red-600 ${
           isSelected
             ? "border-2 border-red-600"
             : "border-2  border-transparent"
         }`}
+        ref={(ref) => connect(drag(ref))}
         style={{
           fontSize: `${fontSize}px`,
-          fontWeight: fontWeight,
-          backgroundColor: backgroundColor,
-          color: color,
-          margin: margin,
-          padding: padding,
+          color,
+          fontWeight,
+          padding,
+          margin,
         }}
+        // Add onKeyDown event handler
         onKeyDown={handleToggle}
+        // Make the label focusable
+        tabIndex={0}
       >
         {text}
-      </button>
-      <Modal isOpen={toggle} onClose={handleToggleCLick}>
+      </label>
+      <Modal isOpen={toggle} onClose={handleToggleClick}>
         <div className="w-96 mx-auto">
-          <SettingsPanel handleClose={handleToggleCLick} />
+          <SettingsPanel handleClose={handleToggleClick} />
         </div>
       </Modal>
     </>
   );
 };
 
-const ButtonSettings = () => {
+const LabelSettings = () => {
   const {
-    actions: { setProp },           
+    actions: { setProp },
     props,
   } = useNode((node) => ({
     props: node.data.props,
   }));
-
   return (
     <>
       <form className=" flex flex-col gap-1">
@@ -100,27 +102,7 @@ const ButtonSettings = () => {
             setProp((props) => (props.fontWeight = e.target.value))
           }
         />
-        <div className="flex gap-2 items-center">
-          <div className="flex-1">
-            <ColorField
-              title="Text color"
-              value={props.color}
-              setValue={(e) =>
-                setProp((props) => (props.color = e.target.value))
-              }
-            />{" "}
-          </div>
-          <div className="flex-1">
-            <ColorField
-              className="flex-1"
-              title="Background color"
-              value={props.backgroundColor}
-              setValue={(e) =>
-                setProp((props) => (props.backgroundColor = e.target.value))
-              }
-            />
-          </div>
-        </div>
+
         <RichtextField
           title="Margin"
           value={props.margin}
@@ -136,18 +118,19 @@ const ButtonSettings = () => {
   );
 };
 
-Button.craft = {
-  displayName: "Button",
+Label.craft = {
+  displayName: "Label",
   props: {
     fontSize: 12,
-    fontWeight: 500,
-    backgroundColor: "#000000",
-    color: "#ffffff",
-    text: "Click Me",
-    padding: "8px 20px",
-    margin: "5px",
+    fontWeight: 400,
+    color: "#000",
+    text: "Name",
+    padding: "0px",
+    margin: "0px",
   },
   related: {
-    settings: ButtonSettings,
+    settings: LabelSettings,
   },
 };
+
+export default Label;

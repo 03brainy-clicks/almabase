@@ -1,27 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 
 const Modal = ({ isOpen, onClose, children }) => {
   const [isBrowser, setIsBrowser] = useState(false);
+  const modalRef = useRef();
 
   useEffect(() => {
     setIsBrowser(true);
   }, []);
 
-  const handleClose = () => {
-    onClose();
-  };
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [isOpen, onClose]);
 
   const modalContent = isOpen && isBrowser && (
     <div className="fixed inset-0 flex items-center justify-center">
       <div className="absolute inset-0 bg-gray-100 opacity-50"></div>
-      <div className="z-50 bg-white p-4 rounded-lg shadow-md">
-        <button
-          onClick={handleClose}
-          className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-        >
-          &times;
-        </button>
+      <div ref={modalRef} className="z-50 bg-white p-5 rounded-lg shadow-md">
         {children}
       </div>
     </div>

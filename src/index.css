@@ -5,3 +5,7 @@
 * ::-webkit-scrollbar {
   display: none;
 }
+input[type="color"] {
+  border: none;
+  outline: none; /* Remove outline on focus */
+}

@@ -1,11 +1,11 @@
-// components/user/Container.js
-import { useEditor, useNode } from "@craftjs/core";
+// components/user/Canvas.js
+import { useNode } from "@craftjs/core";
 import React, { useState } from "react";
 import { ColorField, RichtextField } from "../../../form-elements";
 import { SettingsPanel } from "../../layout/SettingsPanel";
 import Modal from "../../../../utils/Modal";
 
-export const Container = ({
+export const Canvas = ({
   width,
   height,
   backgroundColor,
@@ -18,20 +18,13 @@ export const Container = ({
   const {
     connectors: { connect, drag },
     isSelected,
-    id,
   } = useNode((node) => ({
     isSelected: node.events.selected,
-  }));
-
-  const { actions } = useEditor((state, query, mutation) => ({
-    actions: mutation,
   }));
 
   const handleToggle = (e) => {
     if (e.key === "Enter") {
       setToggle((prev) => !prev);
-    } else if (e.key === "Delete") {
-      actions.delete(id);
     }
   };
 
@@ -63,7 +56,7 @@ export const Container = ({
   );
 };
 
-const ContainerSettings = () => {
+const CanvasSettings = () => {
   const {
     actions: { setProp },
     props,
@@ -106,8 +99,8 @@ const ContainerSettings = () => {
   );
 };
 
-Container.craft = {
-  displayName: "Container",
+Canvas.craft = {
+  displayName: "Canvas",
   props: {
     backgroundColor: "#fff",
     height: "100%",
@@ -116,6 +109,6 @@ Container.craft = {
     margin: "0px",
   },
   related: {
-    settings: ContainerSettings,
+    settings: CanvasSettings,
   },
 };
