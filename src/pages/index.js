@@ -20,7 +20,7 @@ export default function App() {
           <div className="flex flex-col w-full">
             <Topbar />
             <main className="flex-1 w-full h-full flex bg-gray-100 overflow-y-scroll p-7 items-start">
-              <div className="web-page w-3/4 bg-white shadow-sm mx-auto relative">
+              <div className="web-page h-full w-3/4 bg-white shadow-sm mx-auto relative">
                 <Frame>
                   <Element
                     is={Canvas}

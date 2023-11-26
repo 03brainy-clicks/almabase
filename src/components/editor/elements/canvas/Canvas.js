@@ -12,6 +12,8 @@ export const Canvas = ({
   padding,
   margin,
   children,
+  x,
+  y,
 }) => {
   const [toggle, setToggle] = useState(false);
 
@@ -35,13 +37,21 @@ export const Canvas = ({
   return (
     <>
       <div
-        className={`outline-red-500 ${
+        className={`outline-red-500 relative ${
           isSelected
             ? "border-2 border-red-600"
             : "border-2  border-transparent"
         }`}
         ref={(ref) => connect(drag(ref))}
-        style={{ width, height, margin, padding, backgroundColor }}
+        style={{
+          width,
+          height,
+          margin,
+          padding,
+          backgroundColor,
+          top: x,
+          left: y,
+        }}
         onKeyDown={handleToggle}
         tabIndex={0}
       >

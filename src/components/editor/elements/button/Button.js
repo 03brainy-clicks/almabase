@@ -13,6 +13,8 @@ export const Button = ({
   text,
   padding,
   margin,
+  x,
+  y,
 }) => {
   const [toggle, setToggle] = useState(false);
 
@@ -20,6 +22,7 @@ export const Button = ({
     connectors: { connect, drag },
     isSelected,
     id,
+    actions: { setProp },
   } = useNode((node) => ({
     isSelected: node.events.selected,
   }));
@@ -40,11 +43,18 @@ export const Button = ({
     setToggle((prev) => !prev);
   };
 
+  const handleDrag = (e) => {
+    setProp((props) => {
+      props.x = e.clientX;
+      props.y = e.clientY;
+    });
+  };
+
   return (
     <>
       <button
         ref={(ref) => connect(drag(ref))}
-        className={`rounded-md outline-red-600 ${
+        className={`rounded-md outline-red-600 absolute ${
           isSelected
             ? "border-2 border-red-600"
             : "border-2  border-transparent"
@@ -56,8 +66,11 @@ export const Button = ({
           color: color,
           margin: margin,
           padding: padding,
+          top: y,
+          left: x,
         }}
         onKeyDown={handleToggle}
+        onDrag={handleDrag}
       >
         {text}
       </button>
@@ -72,7 +85,7 @@ export const Button = ({
 
 const ButtonSettings = () => {
   const {
-    actions: { setProp },           
+    actions: { setProp },
     props,
   } = useNode((node) => ({
     props: node.data.props,
@@ -146,6 +159,8 @@ Button.craft = {
     text: "Click Me",
     padding: "8px 20px",
     margin: "5px",
+    x: 5,
+    y: 5,
   },
   related: {
     settings: ButtonSettings,
