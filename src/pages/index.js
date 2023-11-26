@@ -10,14 +10,15 @@ import Topbar from "../components/editor/layout/Topbar";
 import { Editor, Element, Frame } from "@craftjs/core";
 import { Input } from "../components/editor/elements/input/Input";
 import { Label } from "../components/editor/elements/label/Label";
-import { Canvas } from "../components/editor/elements/canvas/Canvas";
-// arrows-pointing-out
 import { ComputerDesktopIcon } from "@heroicons/react/24/outline";
+import { CanvasContainer } from "../components/editor/elements/canvas/Canvas";
 
 export default function App() {
   return (
     <div className=" w-full h-full">
-      <Editor resolver={{ Button, Label, Text, Container, Input, Canvas }}>
+      <Editor
+        resolver={{ Button, Label, Text, Container, Input, CanvasContainer }}
+      >
         <div className="flex h-full">
           <div className="flex flex-col w-full">
             <Topbar />
@@ -33,13 +34,14 @@ export default function App() {
               <div className="web-page  bg-white shadow-sm mx-auto relative lg:w-3/4 md:w-4/5 w-full">
                 <Frame>
                   <Element
-                    is={Canvas}
+                    is={CanvasContainer}
                     backgroundColor={"#fff"}
                     padding={"20px"}
+                    data-cy="root-container"
                     canvas
                   >
                     {/* form  */}
-                    <Element is={Container} padding={"0px"}>
+                    <Element is={Container} padding={"5px"} canvas>
                       <Element
                         is={Text}
                         text={"User Details Form"}

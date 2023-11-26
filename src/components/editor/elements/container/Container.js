@@ -30,7 +30,7 @@ export const Container = ({
   const handleToggle = (e) => {
     if (e.key === "Enter") {
       setToggle((prev) => !prev);
-    } else if (e.key === "Delete") {
+    } else if (e.key === "Delete" && isSelected) {
       actions.delete(id);
     }
   };
@@ -42,6 +42,7 @@ export const Container = ({
   return (
     <>
       <div
+        id={id}
         className={`outline-red-500 ${
           isSelected
             ? "border-2 border-red-600"

@@ -40,7 +40,10 @@ export const Toolbox = () => {
           </div>
           <div
             ref={(ref) =>
-              connectors.create(ref, <Element is={Container} canvas />)
+              connectors.create(
+                ref,
+                <Element is={Container} canvas data-cy={"container"} />
+              )
             }
           >
             <ElementCard title="Container" />

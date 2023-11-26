@@ -1,25 +1,24 @@
-// components/user/Canvas.js
+// components/user/CanvasContainer .js
 import { useNode } from "@craftjs/core";
 import React, { useState } from "react";
 import { ColorField, RichtextField } from "../../../form-elements";
 import { SettingsPanel } from "../../layout/SettingsPanel";
 import Modal from "../../../../utils/Modal";
 
-export const Canvas = ({
+export const CanvasContainer = ({
   width,
   height,
   backgroundColor,
   padding,
   margin,
   children,
-  x,
-  y,
 }) => {
   const [toggle, setToggle] = useState(false);
 
   const {
     connectors: { connect, drag },
     isSelected,
+    id,
   } = useNode((node) => ({
     isSelected: node.events.selected,
   }));
@@ -37,21 +36,14 @@ export const Canvas = ({
   return (
     <>
       <div
-        className={`outline-red-500 relative ${
+        id={id}
+        className={`outline-red-500 ${
           isSelected
             ? "border-2 border-red-600"
             : "border-2  border-transparent"
         }`}
         ref={(ref) => connect(drag(ref))}
-        style={{
-          width,
-          height,
-          margin,
-          padding,
-          backgroundColor,
-          top: x,
-          left: y,
-        }}
+        style={{ width, height, margin, padding, backgroundColor }}
         onKeyDown={handleToggle}
         tabIndex={0}
       >
@@ -66,7 +58,7 @@ export const Canvas = ({
   );
 };
 
-const CanvasSettings = () => {
+const CanvasContainerSettings = () => {
   const {
     actions: { setProp },
     props,
@@ -109,8 +101,8 @@ const CanvasSettings = () => {
   );
 };
 
-Canvas.craft = {
-  displayName: "Canvas",
+CanvasContainer.craft = {
+  displayName: "CanvasContainer",
   props: {
     backgroundColor: "#fff",
     height: "100%",
@@ -119,6 +111,6 @@ Canvas.craft = {
     margin: "0px",
   },
   related: {
-    settings: CanvasSettings,
+    settings: CanvasContainerSettings,
   },
 };
