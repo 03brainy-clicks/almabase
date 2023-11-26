@@ -22,7 +22,6 @@ export const Button = ({
     connectors: { connect, drag },
     isSelected,
     id,
-    actions: { setProp },
   } = useNode((node) => ({
     isSelected: node.events.selected,
   }));
@@ -43,18 +42,11 @@ export const Button = ({
     setToggle((prev) => !prev);
   };
 
-  const handleDrag = (e) => {
-    setProp((props) => {
-      props.x = e.clientX;
-      props.y = e.clientY;
-    });
-  };
-
   return (
     <>
       <button
         ref={(ref) => connect(drag(ref))}
-        className={`rounded-md outline-red-600 absolute ${
+        className={`rounded-md outline-red-600 ${
           isSelected
             ? "border-2 border-red-600"
             : "border-2  border-transparent"
@@ -70,7 +62,7 @@ export const Button = ({
           left: x,
         }}
         onKeyDown={handleToggle}
-        onDrag={handleDrag}
+        // onDrag={handleDrag}
       >
         {text}
       </button>
