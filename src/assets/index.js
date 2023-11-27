@@ -1,4 +1,4 @@
-import AlmaLogo from "./images/alma-logo.png";
+import AlmabaseLogo from "./images/almabase-logo.png";
 import GripVerticalIcon from "./icons/verical-grip.svg";
 
-export { AlmaLogo, GripVerticalIcon };
+export { AlmabaseLogo, GripVerticalIcon };
