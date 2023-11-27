@@ -1,5 +1,6 @@
 import React from "react";
 
+// ColorField component with props: value, title, and setValue
 const ColorField = ({ value, title, setValue }) => {
   return (
     <div>
@@ -8,12 +9,12 @@ const ColorField = ({ value, title, setValue }) => {
           {title}
         </label>{" "}
         <br />
-        <div className="w-full rounded-md  overflow-hidden border bg-gray-100">
+        <div className="w-full rounded-md overflow-hidden border bg-gray-100">
           <input
             type="color"
             value={value}
             onChange={setValue}
-            className="w-full border-none outline-none bg-white p-0 m-0 "
+            className="w-full border-none outline-none bg-white p-0 m-0"
           />
         </div>
       </div>{" "}

@@ -2,9 +2,10 @@
 import React, { useState } from "react";
 import { useEditor, useNode } from "@craftjs/core";
 import { NumberField, RichtextField, ColorField } from "../../../form-elements";
-import Modal from "../../../../utils/Modal";
-import { SettingsPanel } from "../../layout/SettingsPanel";
+import { Modal } from "../../../../utils";
+import { SettingsPanel } from "../../layout";
 
+// Text component represents a customizable text element
 export const Text = ({
   fontSize,
   fontWeight,
@@ -13,8 +14,10 @@ export const Text = ({
   padding,
   margin,
 }) => {
+  // State to manage the visibility of the settings modal
   const [toggle, setToggle] = useState(false);
 
+  // Craft.js hooks to access node properties and editor actions
   const {
     connectors: { connect, drag },
     isSelected,
@@ -27,6 +30,7 @@ export const Text = ({
     actions: mutation,
   }));
 
+  // Function to handle key events for toggling settings modal and deleting the node
   const handleToggle = (e) => {
     if (e.key === "Enter") {
       setToggle((prev) => !prev);
@@ -35,10 +39,12 @@ export const Text = ({
     }
   };
 
+  // Function to handle click event for toggling settings modal
   const handleToggleClick = () => {
     setToggle((prev) => !prev);
   };
 
+  // Render the text element with styles, event handlers, and make it focusable
   return (
     <>
       <div
@@ -60,6 +66,7 @@ export const Text = ({
       >
         {text}
       </div>
+      {/* Modal for settings panel */}
       <Modal isOpen={toggle} onClose={handleToggleClick}>
         <div className="w-96 mx-auto">
           <SettingsPanel handleClose={handleToggleClick} />
@@ -69,13 +76,17 @@ export const Text = ({
   );
 };
 
+// TextSettings component to customize text element properties
 const TextSettings = () => {
+  // Craft.js hooks to access node properties and editor actions
   const {
     actions: { setProp },
     props,
   } = useNode((node) => ({
     props: node.data.props,
   }));
+
+  // Render form for customizing text element properties
   return (
     <>
       <form className=" flex flex-col gap-1">
@@ -104,7 +115,6 @@ const TextSettings = () => {
           value={props.color}
           setValue={(e) => setProp((props) => (props.color = e.target.value))}
         />
-
         <RichtextField
           title="Margin"
           value={props.margin}
@@ -120,6 +130,7 @@ const TextSettings = () => {
   );
 };
 
+// Craft.js configuration for the Text component
 Text.craft = {
   displayName: "Text",
   props: {
@@ -130,9 +141,8 @@ Text.craft = {
     padding: "0px",
     margin: "0px",
   },
+  // Specify related settings component
   related: {
     settings: TextSettings,
   },
 };
-
-export default Text;

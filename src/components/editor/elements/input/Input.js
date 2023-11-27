@@ -1,11 +1,10 @@
-// components/user/Input.js
 import React, { useState } from "react";
 import { useEditor, useNode } from "@craftjs/core";
-import Modal from "../../../../utils/Modal";
-import { SettingsPanel } from "../../layout/SettingsPanel";
+import { Modal } from "../../../../utils";
+import { SettingsPanel } from "../../layout";
 import { ColorField, NumberField, RichtextField } from "../../../form-elements";
 
-// Destructure props for cleaner code
+// Input component represents a customizable input field
 export const Input = ({
   fontSize,
   fontWeight,
@@ -16,10 +15,10 @@ export const Input = ({
   margin,
   placeholder,
 }) => {
-  // State for modal visibility
+  // State to manage the visibility of the settings modal
   const [toggle, setToggle] = useState(false);
 
-  // Craft.js hooks for node and editor actions
+  // Craft.js hooks to access node properties and editor actions
   const {
     connectors: { connect, drag },
     isSelected,
@@ -29,11 +28,12 @@ export const Input = ({
     isSelected: node.events.selected,
   }));
 
+  // Destructure actions from useEditor hook for Craft.js editor manipulation
   const { actions } = useEditor((state, query, mutation) => ({
     actions: mutation,
   }));
 
-  // Event handler for toggling modal and deleting input
+  // Function to handle key events for toggling settings modal and deleting the node
   const handleToggle = (e) => {
     if (e.key === "Enter") {
       setToggle((prev) => !prev);
@@ -42,15 +42,15 @@ export const Input = ({
     }
   };
 
-  // Event handler for toggling modal
+  // Function to handle click event for toggling settings modal
   const handleToggleClick = () => {
     setToggle((prev) => !prev);
   };
 
+  // Render the input field with styles and event handlers
   return (
     <div ref={(ref) => connect(drag(ref))}>
       <input
-        // Inline styles for dynamic styling
         style={{
           padding,
           margin,
@@ -67,13 +67,13 @@ export const Input = ({
         }`}
         value={text}
         placeholder={placeholder}
-        // Update text value on input change
         onChange={(e) => setProp((props) => (props.text = e.target.value))}
         onKeyDown={handleToggle}
       />
       {/* Modal for settings panel */}
       <Modal isOpen={toggle} onClose={handleToggleClick}>
         <div className="w-96 mx-auto">
+          {/* Settings panel for customizing input properties */}
           <SettingsPanel handleClose={handleToggleClick} />
         </div>
       </Modal>
@@ -81,9 +81,9 @@ export const Input = ({
   );
 };
 
-// Settings panel component
+// InputSettings component to customize input properties
 const InputSettings = () => {
-  // Craft.js hooks for node actions and props
+  // Craft.js hooks to access node properties and editor actions
   const {
     actions: { setProp },
     props,
@@ -91,25 +91,22 @@ const InputSettings = () => {
     props: node.data.props,
   }));
 
+  // Render form for customizing input properties
   return (
     <>
-      {/* Form for adjusting input settings */}
       <form className="flex flex-col gap-1">
         <RichtextField
           title="Text"
           value={props.text}
-          // Update text prop on input change
           setValue={(e) => setProp((props) => (props.text = e.target.value))}
         />
         <RichtextField
           title="Placeholder"
           value={props.placeholder}
-          // Update placeholder prop on input change
           setValue={(e) =>
             setProp((props) => (props.placeholder = e.target.value))
           }
         />
-        {/* Additional input settings */}
         <NumberField
           title="Font size"
           value={props.fontSize}
@@ -126,7 +123,6 @@ const InputSettings = () => {
         />
         <div className="flex gap-2 items-center">
           <div className="flex-1">
-            {/* ColorField for text color */}
             <ColorField
               title="Text color"
               value={props.color}
@@ -136,7 +132,6 @@ const InputSettings = () => {
             />
           </div>
           <div className="flex-1">
-            {/* ColorField for background color */}
             <ColorField
               className="flex-1"
               title="Background color"
@@ -147,7 +142,6 @@ const InputSettings = () => {
             />
           </div>
         </div>
-        {/* Additional input styling settings */}
         <RichtextField
           title="Margin"
           value={props.margin}
@@ -163,7 +157,7 @@ const InputSettings = () => {
   );
 };
 
-// Craft settings for the Input component
+// Craft.js configuration for the Input component
 Input.craft = {
   displayName: "Input",
   props: {
@@ -176,9 +170,8 @@ Input.craft = {
     padding: "8px",
     margin: "5px 0px",
   },
+  // Specify related settings component
   related: {
     settings: InputSettings,
   },
 };
-
-export default Input;

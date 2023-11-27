@@ -1,10 +1,10 @@
-// components/user/Button.js
 import { useEditor, useNode } from "@craftjs/core";
 import React, { useState } from "react";
-import Modal from "../../../../utils/Modal";
-import { SettingsPanel } from "../../layout/SettingsPanel";
 import { ColorField, NumberField, RichtextField } from "../../../form-elements";
+import { SettingsPanel } from "../../layout";
+import { Modal } from "../../../../utils";
 
+// Define the Button component
 export const Button = ({
   fontSize,
   fontWeight,
@@ -16,8 +16,10 @@ export const Button = ({
   x,
   y,
 }) => {
+  // State for the settings modal
   const [toggle, setToggle] = useState(false);
 
+  // Use Craft.js hooks to access node properties and editor actions
   const {
     connectors: { connect, drag },
     isSelected,
@@ -26,10 +28,12 @@ export const Button = ({
     isSelected: node.events.selected,
   }));
 
+  // Destructure actions from useEditor hook for Craft.js editor manipulation
   const { actions } = useEditor((state, query, mutation) => ({
     actions: mutation,
   }));
 
+  // Handle key events for opening the settings modal and deleting the button
   const handleToggle = (e) => {
     if (e.key === "Enter") {
       setToggle((prev) => !prev);
@@ -38,10 +42,12 @@ export const Button = ({
     }
   };
 
-  const handleToggleCLick = (e) => {
+  // Handle click event to open the settings modal
+  const handleToggleClick = () => {
     setToggle((prev) => !prev);
   };
 
+  // Render the button element with dynamic styles
   return (
     <>
       <button
@@ -62,20 +68,23 @@ export const Button = ({
           left: x,
         }}
         onKeyDown={handleToggle}
-        // onDrag={handleDrag}
       >
         {text}
       </button>
-      <Modal isOpen={toggle} onClose={handleToggleCLick}>
+
+      {/* Settings modal */}
+      <Modal isOpen={toggle} onClose={handleToggleClick}>
         <div className="w-96 mx-auto">
-          <SettingsPanel handleClose={handleToggleCLick} />
+          <SettingsPanel handleClose={handleToggleClick} />
         </div>
       </Modal>
     </>
   );
 };
 
+// Define the settings panel for the Button component
 const ButtonSettings = () => {
+  // Use Craft.js hooks to access node properties and actions
   const {
     actions: { setProp },
     props,
@@ -83,14 +92,16 @@ const ButtonSettings = () => {
     props: node.data.props,
   }));
 
+  // Render form for customizing button styles
   return (
     <>
-      <form className=" flex flex-col gap-1">
+      <form className="flex flex-col gap-1">
         <RichtextField
           title="Text"
           value={props.text}
           setValue={(e) => setProp((props) => (props.text = e.target.value))}
         />
+
         <NumberField
           title="Font size"
           value={props.fontSize}
@@ -98,6 +109,7 @@ const ButtonSettings = () => {
             setProp((props) => (props.fontSize = e.target.value))
           }
         />
+
         <NumberField
           title="Font weight"
           value={props.fontWeight}
@@ -105,6 +117,7 @@ const ButtonSettings = () => {
             setProp((props) => (props.fontWeight = e.target.value))
           }
         />
+
         <div className="flex gap-2 items-center">
           <div className="flex-1">
             <ColorField
@@ -113,11 +126,10 @@ const ButtonSettings = () => {
               setValue={(e) =>
                 setProp((props) => (props.color = e.target.value))
               }
-            />{" "}
+            />
           </div>
           <div className="flex-1">
             <ColorField
-              className="flex-1"
               title="Background color"
               value={props.backgroundColor}
               setValue={(e) =>
@@ -126,6 +138,7 @@ const ButtonSettings = () => {
             />
           </div>
         </div>
+
         <RichtextField
           title="Margin"
           value={props.margin}
@@ -141,6 +154,7 @@ const ButtonSettings = () => {
   );
 };
 
+// Define metadata for the Button component in the Craft.js editor
 Button.craft = {
   displayName: "Button",
   props: {
@@ -155,6 +169,6 @@ Button.craft = {
     y: 5,
   },
   related: {
-    settings: ButtonSettings,
+    settings: ButtonSettings, // Link to the ButtonSettings component
   },
 };

@@ -1,10 +1,10 @@
-// components/user/Text.js
 import React, { useState } from "react";
 import { useEditor, useNode } from "@craftjs/core";
 import { NumberField, RichtextField } from "../../../form-elements";
-import Modal from "../../../../utils/Modal";
-import { SettingsPanel } from "../../layout/SettingsPanel";
+import { Modal } from "../../../../utils";
+import { SettingsPanel } from "../../layout";
 
+// Label component represents a customizable label
 export const Label = ({
   fontSize,
   fontWeight,
@@ -13,8 +13,10 @@ export const Label = ({
   padding,
   margin,
 }) => {
+  // State to manage the visibility of the settings modal
   const [toggle, setToggle] = useState(false);
 
+  // Craft.js hooks to access node properties and editor actions
   const {
     connectors: { connect, drag },
     isSelected,
@@ -27,20 +29,21 @@ export const Label = ({
     actions: mutation,
   }));
 
+  // Function to handle key events for toggling settings modal and deleting the node
   const handleToggle = (e) => {
     if (e.key === "Enter") {
-      // Toggle the modal on Enter key press
       setToggle((prev) => !prev);
     } else if (e.key === "Delete") {
-      // Delete the label on Delete key press
       actions.delete(id);
     }
   };
 
+  // Function to handle click event for toggling settings modal
   const handleToggleClick = () => {
     setToggle((prev) => !prev);
   };
 
+  // Render the label with styles, event handlers, and make it focusable
   return (
     <>
       <label
@@ -57,13 +60,12 @@ export const Label = ({
           padding,
           margin,
         }}
-        // Add onKeyDown event handler
         onKeyDown={handleToggle}
-        // Make the label focusable
         tabIndex={0}
       >
         {text}
       </label>
+      {/* Modal for settings panel */}
       <Modal isOpen={toggle} onClose={handleToggleClick}>
         <div className="w-96 mx-auto">
           <SettingsPanel handleClose={handleToggleClick} />
@@ -73,13 +75,17 @@ export const Label = ({
   );
 };
 
+// LabelSettings component to customize label properties
 const LabelSettings = () => {
+  // Craft.js hooks to access node properties and editor actions
   const {
     actions: { setProp },
     props,
   } = useNode((node) => ({
     props: node.data.props,
   }));
+
+  // Render form for customizing label properties
   return (
     <>
       <form className=" flex flex-col gap-1">
@@ -102,7 +108,6 @@ const LabelSettings = () => {
             setProp((props) => (props.fontWeight = e.target.value))
           }
         />
-
         <RichtextField
           title="Margin"
           value={props.margin}
@@ -118,6 +123,7 @@ const LabelSettings = () => {
   );
 };
 
+// Craft.js configuration for the Label component
 Label.craft = {
   displayName: "Label",
   props: {
@@ -128,9 +134,8 @@ Label.craft = {
     padding: "0px",
     margin: "0px",
   },
+  // Specify related settings component
   related: {
     settings: LabelSettings,
   },
 };
-
-export default Label;

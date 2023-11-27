@@ -1,5 +1,6 @@
 import React from "react";
 
+// RichtextField component with props: value, title, placeholder, and setValue
 const RichtextField = ({ value, title, placeholder, setValue }) => {
   return (
     <div>

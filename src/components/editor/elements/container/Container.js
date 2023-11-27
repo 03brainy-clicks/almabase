@@ -1,10 +1,10 @@
-// components/user/Container.js
-import { useEditor, useNode } from "@craftjs/core";
 import React, { useState } from "react";
+import { useEditor, useNode } from "@craftjs/core";
 import { ColorField, RichtextField } from "../../../form-elements";
-import { SettingsPanel } from "../../layout/SettingsPanel";
-import Modal from "../../../../utils/Modal";
+import { SettingsPanel } from "../../layout";
+import { Modal } from "../../../../utils";
 
+// Define the Container component
 export const Container = ({
   width,
   height,
@@ -13,8 +13,10 @@ export const Container = ({
   margin,
   children,
 }) => {
+  // State to manage the modal toggle
   const [toggle, setToggle] = useState(false);
 
+  // Destructure values from useNode hook for interaction with Craft.js
   const {
     connectors: { connect, drag },
     isSelected,
@@ -23,10 +25,12 @@ export const Container = ({
     isSelected: node.events.selected,
   }));
 
+  // Destructure actions from useEditor hook for Craft.js editor manipulation
   const { actions } = useEditor((state, query, mutation) => ({
     actions: mutation,
   }));
 
+  // Handle toggle on Enter key press and delete on Delete key press
   const handleToggle = (e) => {
     if (e.key === "Enter") {
       setToggle((prev) => !prev);
@@ -35,10 +39,12 @@ export const Container = ({
     }
   };
 
+  // Handle toggle on click
   const handleToggleCLick = (e) => {
     setToggle((prev) => !prev);
   };
 
+  // Render the Container with styles and event handlers
   return (
     <>
       <div
@@ -46,7 +52,7 @@ export const Container = ({
         className={`outline-red-500 ${
           isSelected
             ? "border-2 border-red-600"
-            : "border-2  border-transparent"
+            : "border-2 border-transparent"
         }`}
         ref={(ref) => connect(drag(ref))}
         style={{ width, height, margin, padding, backgroundColor }}
@@ -55,6 +61,8 @@ export const Container = ({
       >
         {children}
       </div>
+
+      {/* Modal for settings panel */}
       <Modal isOpen={toggle} onClose={handleToggleCLick}>
         <div className="w-96 mx-auto">
           <SettingsPanel handleClose={handleToggleCLick} />
@@ -64,16 +72,20 @@ export const Container = ({
   );
 };
 
+// Define the ContainerSettings component for customizing settings
 const ContainerSettings = () => {
+  // Destructure values from useNode hook for interaction with Craft.js
   const {
     actions: { setProp },
     props,
   } = useNode((node) => ({
     props: node.data.props,
   }));
+
+  // Render form with fields for setting properties
   return (
     <>
-      <form className=" flex flex-col gap-1">
+      <form className="flex flex-col gap-1">
         <RichtextField
           title="Width"
           value={props.width}
@@ -107,6 +119,7 @@ const ContainerSettings = () => {
   );
 };
 
+// Craft.js configuration for Container component
 Container.craft = {
   displayName: "Container",
   props: {
@@ -116,6 +129,7 @@ Container.craft = {
     padding: "20px",
     margin: "0px",
   },
+  // Specify related settings component
   related: {
     settings: ContainerSettings,
   },

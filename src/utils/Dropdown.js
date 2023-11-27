@@ -4,15 +4,17 @@ import React, { useState } from "react";
 const Dropdown = ({ open = true, title, children }) => {
   const [isOpen, setIsOpen] = useState(open);
 
+  // Function to toggle the dropdown state when the title is clicked
   const handleToggle = (e) => {
     e.preventDefault();
     setIsOpen((prev) => !prev);
   };
 
+  // Render the dropdown with title and toggle icon
   return (
-    <div className=" border-b">
+    <div className="border-b">
       <div
-        className="flex items-center  justify-between p-5"
+        className="flex items-center justify-between p-5 cursor-pointer"
         onClick={handleToggle}
       >
         <h6 className="text-xs font-semibold">{title}</h6>

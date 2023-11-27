@@ -1,6 +1,7 @@
 import React from "react";
 
-const NumberField = ({ value, title, placeholder, setValue }) => {
+// NumberField component with props: value, title, and setValue
+const NumberField = ({ value, title, setValue }) => {
   return (
     <div>
       <div>
@@ -12,7 +13,6 @@ const NumberField = ({ value, title, placeholder, setValue }) => {
           type="number"
           className="py-2 mt-1 bg-gray-100 px-2 rounded-md text-xs w-full"
           value={value}
-          placeholder={placeholder}
           onChange={setValue}
         />
       </div>{" "}
