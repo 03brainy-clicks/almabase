@@ -1,8 +1,14 @@
 import { useEditor, useNode } from "@craftjs/core";
 import React, { useState } from "react";
-import { ColorField, NumberField, RichtextField } from "../../../form-elements";
+import {
+  ColorField,
+  NumberField,
+  RichtextField,
+  SelectField,
+  MarginField,
+} from "../../../form-elements";
 import { SettingsPanel } from "../../layout";
-import { Modal } from "../../../../utils";
+import { FontWeightOptions, Modal } from "../../../../utils";
 
 // Define the Button component
 export const Button = ({
@@ -11,10 +17,14 @@ export const Button = ({
   backgroundColor,
   color,
   text,
-  padding,
-  margin,
-  x,
-  y,
+  marginLeft,
+  marginTop,
+  marginBottom,
+  marginRight,
+  paddingLeft,
+  paddingTop,
+  paddingBottom,
+  paddingRight,
 }) => {
   // State for the settings modal
   const [toggle, setToggle] = useState(false);
@@ -62,10 +72,8 @@ export const Button = ({
           fontWeight: fontWeight,
           backgroundColor: backgroundColor,
           color: color,
-          margin: margin,
-          padding: padding,
-          top: y,
-          left: x,
+          padding: `${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px`,
+          margin: `${marginTop}px ${marginRight}px ${marginBottom}px ${marginLeft}px`,
         }}
         onKeyDown={handleToggle}
       >
@@ -110,12 +118,11 @@ const ButtonSettings = () => {
           }
         />
 
-        <NumberField
+        <SelectField
+          options={FontWeightOptions}
           title="Font weight"
           value={props.fontWeight}
-          setValue={(e) =>
-            setProp((props) => (props.fontWeight = e.target.value))
-          }
+          setValue={(value) => setProp((props) => (props.fontWeight = value))}
         />
 
         <div className="flex gap-2 items-center">
@@ -139,15 +146,45 @@ const ButtonSettings = () => {
           </div>
         </div>
 
-        <RichtextField
+        <MarginField
           title="Margin"
-          value={props.margin}
-          setValue={(e) => setProp((props) => (props.margin = e.target.value))}
+          value={{
+            top: props.marginTop,
+            bottom: props.marginBottom,
+            left: props.marginLeft,
+            right: props.marginRight,
+          }}
+          setBottom={(e) =>
+            setProp((props) => (props.marginBottom = e.target.value))
+          }
+          setTop={(e) => setProp((props) => (props.marginTop = e.target.value))}
+          setLeft={(e) =>
+            setProp((props) => (props.marginLeft = e.target.value))
+          }
+          setRight={(e) =>
+            setProp((props) => (props.marginRight = e.target.value))
+          }
         />
-        <RichtextField
+        <MarginField
           title="Padding"
-          value={props.padding}
-          setValue={(e) => setProp((props) => (props.padding = e.target.value))}
+          value={{
+            top: props.paddingTop,
+            bottom: props.paddingBottom,
+            left: props.paddingLeft,
+            right: props.paddingRight,
+          }}
+          setBottom={(e) =>
+            setProp((props) => (props.paddingBottom = e.target.value))
+          }
+          setTop={(e) =>
+            setProp((props) => (props.paddingTop = e.target.value))
+          }
+          setLeft={(e) =>
+            setProp((props) => (props.paddingLeft = e.target.value))
+          }
+          setRight={(e) =>
+            setProp((props) => (props.paddingRight = e.target.value))
+          }
         />
       </form>
     </>
@@ -163,10 +200,14 @@ Button.craft = {
     backgroundColor: "#000000",
     color: "#ffffff",
     text: "Click Me",
-    padding: "8px 20px",
-    margin: "5px",
-    x: 5,
-    y: 5,
+    marginLeft: 5,
+    marginTop: 5,
+    marginBottom: 5,
+    marginRight: 5,
+    paddingLeft: 20,
+    paddingTop: 8,
+    paddingBottom: 8,
+    paddingRight: 20,
   },
   related: {
     settings: ButtonSettings, // Link to the ButtonSettings component

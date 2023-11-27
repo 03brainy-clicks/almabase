@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import { useEditor, useNode } from "@craftjs/core";
-import { Modal } from "../../../../utils";
+import { FontWeightOptions, Modal } from "../../../../utils";
 import { SettingsPanel } from "../../layout";
-import { ColorField, NumberField, RichtextField } from "../../../form-elements";
+import {
+  NumberField,
+  RichtextField,
+  ColorField,
+  SelectField,
+  MarginField,
+} from "../../../form-elements";
 
 // Input component represents a customizable input field
 export const Input = ({
@@ -11,8 +17,14 @@ export const Input = ({
   backgroundColor,
   color,
   text,
-  padding,
-  margin,
+  marginLeft,
+  marginTop,
+  marginBottom,
+  marginRight,
+  paddingLeft,
+  paddingTop,
+  paddingBottom,
+  paddingRight,
   placeholder,
 }) => {
   // State to manage the visibility of the settings modal
@@ -52,8 +64,8 @@ export const Input = ({
     <div ref={(ref) => connect(drag(ref))}>
       <input
         style={{
-          padding,
-          margin,
+          padding: `${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px`,
+          margin: `${marginTop}px ${marginRight}px ${marginBottom}px ${marginLeft}px`,
           fontSize: `${fontSize}px`,
           fontWeight,
           color: color,
@@ -114,12 +126,11 @@ const InputSettings = () => {
             setProp((props) => (props.fontSize = e.target.value))
           }
         />
-        <NumberField
+        <SelectField
+          options={FontWeightOptions}
           title="Font weight"
           value={props.fontWeight}
-          setValue={(e) =>
-            setProp((props) => (props.fontWeight = e.target.value))
-          }
+          setValue={(value) => setProp((props) => (props.fontWeight = value))}
         />
         <div className="flex gap-2 items-center">
           <div className="flex-1">
@@ -142,15 +153,45 @@ const InputSettings = () => {
             />
           </div>
         </div>
-        <RichtextField
+        <MarginField
           title="Margin"
-          value={props.margin}
-          setValue={(e) => setProp((props) => (props.margin = e.target.value))}
+          value={{
+            top: props.marginTop,
+            bottom: props.marginBottom,
+            left: props.marginLeft,
+            right: props.marginRight,
+          }}
+          setBottom={(e) =>
+            setProp((props) => (props.marginBottom = e.target.value))
+          }
+          setTop={(e) => setProp((props) => (props.marginTop = e.target.value))}
+          setLeft={(e) =>
+            setProp((props) => (props.marginLeft = e.target.value))
+          }
+          setRight={(e) =>
+            setProp((props) => (props.marginRight = e.target.value))
+          }
         />
-        <RichtextField
+        <MarginField
           title="Padding"
-          value={props.padding}
-          setValue={(e) => setProp((props) => (props.padding = e.target.value))}
+          value={{
+            top: props.paddingTop,
+            bottom: props.paddingBottom,
+            left: props.paddingLeft,
+            right: props.paddingRight,
+          }}
+          setBottom={(e) =>
+            setProp((props) => (props.paddingBottom = e.target.value))
+          }
+          setTop={(e) =>
+            setProp((props) => (props.paddingTop = e.target.value))
+          }
+          setLeft={(e) =>
+            setProp((props) => (props.paddingLeft = e.target.value))
+          }
+          setRight={(e) =>
+            setProp((props) => (props.paddingRight = e.target.value))
+          }
         />
       </form>
     </>
@@ -167,8 +208,14 @@ Input.craft = {
     color: "#000",
     text: "",
     placeholder: "Enter Your Name",
-    padding: "8px",
-    margin: "5px 0px",
+    marginLeft: 0,
+    marginTop: 5,
+    marginBottom: 5,
+    marginRight: 0,
+    paddingLeft: 8,
+    paddingTop: 8,
+    paddingBottom: 8,
+    paddingRight: 8,
   },
   // Specify related settings component
   related: {

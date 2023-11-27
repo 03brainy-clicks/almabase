@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useEditor, useNode } from "@craftjs/core";
-import { ColorField, RichtextField } from "../../../form-elements";
+import { ColorField, RichtextField, MarginField } from "../../../form-elements";
 import { SettingsPanel } from "../../layout";
 import { Modal } from "../../../../utils";
 
@@ -9,8 +9,14 @@ export const Container = ({
   width,
   height,
   backgroundColor,
-  padding,
-  margin,
+  marginLeft,
+  marginTop,
+  marginBottom,
+  marginRight,
+  paddingLeft,
+  paddingTop,
+  paddingBottom,
+  paddingRight,
   children,
 }) => {
   // State to manage the modal toggle
@@ -50,12 +56,16 @@ export const Container = ({
       <div
         id={id}
         className={`outline-red-500 ${
-          isSelected
-            ? "border-2 border-red-600"
-            : "border-2 border-transparent"
+          isSelected ? "border-2 border-red-600" : "border-2 border-transparent"
         }`}
         ref={(ref) => connect(drag(ref))}
-        style={{ width, height, margin, padding, backgroundColor }}
+        style={{
+          width,
+          height,
+          padding: `${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px`,
+          margin: `${marginTop}px ${marginRight}px ${marginBottom}px ${marginLeft}px`,
+          backgroundColor,
+        }}
         onKeyDown={handleToggle}
         tabIndex={0}
       >
@@ -104,15 +114,45 @@ const ContainerSettings = () => {
             setProp((props) => (props.backgroundColor = e.target.value))
           }
         />
-        <RichtextField
+        <MarginField
           title="Margin"
-          value={props.margin}
-          setValue={(e) => setProp((props) => (props.margin = e.target.value))}
+          value={{
+            top: props.marginTop,
+            bottom: props.marginBottom,
+            left: props.marginLeft,
+            right: props.marginRight,
+          }}
+          setBottom={(e) =>
+            setProp((props) => (props.marginBottom = e.target.value))
+          }
+          setTop={(e) => setProp((props) => (props.marginTop = e.target.value))}
+          setLeft={(e) =>
+            setProp((props) => (props.marginLeft = e.target.value))
+          }
+          setRight={(e) =>
+            setProp((props) => (props.marginRight = e.target.value))
+          }
         />
-        <RichtextField
+        <MarginField
           title="Padding"
-          value={props.padding}
-          setValue={(e) => setProp((props) => (props.padding = e.target.value))}
+          value={{
+            top: props.paddingTop,
+            bottom: props.paddingBottom,
+            left: props.paddingLeft,
+            right: props.paddingRight,
+          }}
+          setBottom={(e) =>
+            setProp((props) => (props.paddingBottom = e.target.value))
+          }
+          setTop={(e) =>
+            setProp((props) => (props.paddingTop = e.target.value))
+          }
+          setLeft={(e) =>
+            setProp((props) => (props.paddingLeft = e.target.value))
+          }
+          setRight={(e) =>
+            setProp((props) => (props.paddingRight = e.target.value))
+          }
         />
       </form>
     </>
@@ -126,8 +166,14 @@ Container.craft = {
     backgroundColor: "#fff",
     height: "100%",
     width: "100%",
-    padding: "20px",
-    margin: "0px",
+    marginLeft: 0,
+    marginTop: 0,
+    marginBottom: 0,
+    marginRight: 0,
+    paddingLeft: 0,
+    paddingTop: 0,
+    paddingBottom: 0,
+    paddingRight: 0,
   },
   // Specify related settings component
   related: {

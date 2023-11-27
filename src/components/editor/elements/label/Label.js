@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import { useEditor, useNode } from "@craftjs/core";
-import { NumberField, RichtextField } from "../../../form-elements";
-import { Modal } from "../../../../utils";
+import {
+  NumberField,
+  RichtextField,
+  SelectField,
+  MarginField,
+} from "../../../form-elements";
+import { FontWeightOptions, Modal } from "../../../../utils";
 import { SettingsPanel } from "../../layout";
 
 // Label component represents a customizable label
@@ -10,8 +15,14 @@ export const Label = ({
   fontWeight,
   color,
   text,
-  padding,
-  margin,
+  marginLeft,
+  marginTop,
+  marginBottom,
+  marginRight,
+  paddingLeft,
+  paddingTop,
+  paddingBottom,
+  paddingRight,
 }) => {
   // State to manage the visibility of the settings modal
   const [toggle, setToggle] = useState(false);
@@ -57,8 +68,8 @@ export const Label = ({
           fontSize: `${fontSize}px`,
           color,
           fontWeight,
-          padding,
-          margin,
+          padding: `${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px`,
+          margin: `${marginTop}px ${marginRight}px ${marginBottom}px ${marginLeft}px`,
         }}
         onKeyDown={handleToggle}
         tabIndex={0}
@@ -101,22 +112,51 @@ const LabelSettings = () => {
             setProp((props) => (props.fontSize = e.target.value))
           }
         />
-        <NumberField
+        <SelectField
+          options={FontWeightOptions}
           title="Font weight"
           value={props.fontWeight}
-          setValue={(e) =>
-            setProp((props) => (props.fontWeight = e.target.value))
+          setValue={(value) => setProp((props) => (props.fontWeight = value))}
+        />
+        <MarginField
+          title="Margin"
+          value={{
+            top: props.marginTop,
+            bottom: props.marginBottom,
+            left: props.marginLeft,
+            right: props.marginRight,
+          }}
+          setBottom={(e) =>
+            setProp((props) => (props.marginBottom = e.target.value))
+          }
+          setTop={(e) => setProp((props) => (props.marginTop = e.target.value))}
+          setLeft={(e) =>
+            setProp((props) => (props.marginLeft = e.target.value))
+          }
+          setRight={(e) =>
+            setProp((props) => (props.marginRight = e.target.value))
           }
         />
-        <RichtextField
-          title="Margin"
-          value={props.margin}
-          setValue={(e) => setProp((props) => (props.margin = e.target.value))}
-        />
-        <RichtextField
+        <MarginField
           title="Padding"
-          value={props.padding}
-          setValue={(e) => setProp((props) => (props.padding = e.target.value))}
+          value={{
+            top: props.paddingTop,
+            bottom: props.paddingBottom,
+            left: props.paddingLeft,
+            right: props.paddingRight,
+          }}
+          setBottom={(e) =>
+            setProp((props) => (props.paddingBottom = e.target.value))
+          }
+          setTop={(e) =>
+            setProp((props) => (props.paddingTop = e.target.value))
+          }
+          setLeft={(e) =>
+            setProp((props) => (props.paddingLeft = e.target.value))
+          }
+          setRight={(e) =>
+            setProp((props) => (props.paddingRight = e.target.value))
+          }
         />
       </form>
     </>
@@ -131,8 +171,14 @@ Label.craft = {
     fontWeight: 400,
     color: "#000",
     text: "Name",
-    padding: "0px",
-    margin: "0px",
+    marginLeft: 0,
+    marginTop: 0,
+    marginBottom: 0,
+    marginRight: 0,
+    paddingLeft: 0,
+    paddingTop: 0,
+    paddingBottom: 0,
+    paddingRight: 0,
   },
   // Specify related settings component
   related: {
