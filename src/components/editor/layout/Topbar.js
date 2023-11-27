@@ -55,7 +55,7 @@ const Topbar = () => {
 
   return (
     <div className="w-full border-b flex shadow-sm">
-      <div className="logo p-4 border-r">
+      <div className="logo p-4 lg:border-r">
         <img src={AlmaLogo} alt="almalogo" className="w-7 h-7" />
       </div>
       <div className="px-4 flex-1 flex items-center">
@@ -118,7 +118,7 @@ const Topbar = () => {
                     name="load"
                     id="load"
                     rows="3"
-                    className="w-full py-2 bg-gray-100 rounded-sm outline-none"
+                    className="w-full p-2 bg-gray-100 rounded-sm outline-none"
                   ></textarea>
                 </div>
                 <div className="flex gap-2 items-center mt-1">
