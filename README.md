@@ -1,4 +1,4 @@
-# AlmaBase Assessment - Comprehensive Documentation
+# AlmaBase Assessment 
 
 ## Overview
 
