@@ -45,27 +45,27 @@ Tailwind CSS, a utility-first CSS framework, is integrated into AlmaBase Assessm
 
 Explore the folder structure of the AlmaBase Assessment project. Click [here](https://miro.com/app/board/uXjVNKCD5Vw=/?share_link_id=591247335777) to view the Miro board illustrating the folder structure.
 
-![Folder Structure](https://github.com/03brainy-clicks/almabase/blob/main/src/assets/images/folder-structure.png)
+![Folder Structure](./src/assets/images/folder-structure.png)
 
 ## User Interface
 
 ### Desktop View
-![Desktop View](https://github.com/03brainy-clicks/almabase/blob/main/src/assets/images/ui/desktop.png)
+![Desktop View](./src/assets/images/ui/desktop.png)
 
 ### Tablet View
-![Tablet View](https://github.com/03brainy-clicks/almabase/blob/main/src/assets/images/ui/tablet.png)
+![Tablet View](./src/assets/images/ui/tablet.png)
 
 ### Mobile View
-![Mobile View](https://github.com/03brainy-clicks/almabase/blob/main/src/assets/images/ui/mobile.png)
+![Mobile View](./src/assets/images/ui/mobile.png)
 
 ### Load Modal
-![Load Modal](https://github.com/03brainy-clicks/almabase/blob/main/src/assets/images/ui/load-modal.png)
+![Load Modal](./src/assets/images/ui/load-modal.png)
 
 ### Style Modal
-![Style Modal](https://github.com/03brainy-clicks/almabase/blob/main/src/assets/images/ui/style-modal.png)
+![Style Modal](./src/assets/images/ui/style-modal.png)
 
 ### Selected Element
-![Selected Element](https://github.com/03brainy-clicks/almabase/blob/main/src/assets/images/ui/selected-element.png)
+![Selected Element](./src/assets/images/ui/selected-element.png)
 
 ## Features
 
