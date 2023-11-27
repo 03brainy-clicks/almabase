@@ -1,5 +1,3 @@
-// pages/index.js
-
 import React from "react";
 
 import { Button } from "../components/editor/elements/button/Button";

@@ -4,6 +4,8 @@ import {
   ArrowDownTrayIcon,
   CheckBadgeIcon,
   XMarkIcon,
+  ArrowUturnLeftIcon,
+  ArrowUturnRightIcon,
 } from "@heroicons/react/24/outline";
 import { AlmaLogo } from "../../../assets";
 import Modal from "../../../utils/Modal";
@@ -12,10 +14,11 @@ import copy from "copy-to-clipboard";
 import { useEditor } from "@craftjs/core";
 
 const Topbar = () => {
-  const { actions, query } = useEditor((state) => ({
+  const { actions, query, canUndo, canRedo } = useEditor((state, query) => ({
     enabled: state.options.enabled,
+    canUndo: state.options.enabled && query.history.canUndo(),
+    canRedo: state.options.enabled && query.history.canRedo(),
   }));
-
   const [toggle, setToggle] = useState(false);
   const [copyValue, setCopyValue] = useState(false);
   const [stateToLoad, setStateToLoad] = useState(null);
@@ -38,12 +41,40 @@ const Topbar = () => {
     setStateToLoad(null);
   };
 
+  const handleUndo = () => {
+    if (canUndo) {
+      actions.history.undo();
+    }
+  };
+
+  const handleRedo = () => {
+    if (canRedo) {
+      actions.history.redo();
+    }
+  };
+
   return (
     <div className="w-full border-b flex shadow-sm">
       <div className="logo p-4 border-r">
         <img src={AlmaLogo} alt="almalogo" className="w-7 h-7" />
       </div>
       <div className="px-4 flex-1 flex items-center">
+        <div className="font-medium gap-2 items-center lg:flex hidden">
+          <button
+            onClick={handleUndo}
+            disabled={!canUndo}
+            className="p-2 text-xs font-medium bg-transparent border border-gray-900 rounded flex gap-1 items-center disabled:border-gray-300 disabled:text-gray-300"
+          >
+            <ArrowUturnLeftIcon className="w-3 " />
+          </button>
+          <button
+            onClick={handleRedo}
+            disabled={!canRedo}
+            className="p-2 text-xs font-medium bg-transparent border  border-gray-900 rounded flex gap-1 items-center disabled:border-gray-300 disabled:text-gray-300"
+          >
+            <ArrowUturnRightIcon className="w-3 " />
+          </button>
+        </div>
         <div className="button ml-auto font-medium flex gap-2">
           <button
             onClick={handleSaveCopy}
