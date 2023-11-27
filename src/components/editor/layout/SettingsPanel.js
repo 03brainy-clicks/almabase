@@ -29,7 +29,8 @@ export const SettingsPanel = ({ handleClose }) => {
       <div>
         <div className="flex justify-between items-center mb-4">
           <div className="text-xs font-semibold  uppercase">
-            {selected.name} Style
+            {selected.name === "CanvasContainer" ? "Canvas" : selected.name}{" "}
+            Style
           </div>
           <XMarkIcon
             onClick={handleClose}
